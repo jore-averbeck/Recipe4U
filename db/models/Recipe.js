@@ -7,8 +7,27 @@ const schema = new Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+    },
+    image: {
+      type: String,
+    },
+
+    ingredients: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    steps: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
-  // add other needed fields here
+
   { timestamps: true }
 );
 
