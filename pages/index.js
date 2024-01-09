@@ -3,14 +3,31 @@ import useSWR from "swr";
 import Card from "../components/Card.js";
 
 export default function Homepage() {
-  const { data } = useSWR("/api/recipes", { fallbackData: [] });
+  const { data, mutate } = useSWR("/api/recipes", { fallbackData: [] });
+
+  async function handleDelete(id) {
+    const response = await fetch(`/api/recipes/${id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      await response.json();
+      mutate(); // Refresh data after deletion
+    } else {
+      console.error(
+        "Error deleting recipe:",
+        response.status,
+        response.statusText
+      );
+    }
+  }
 
   console.log(data);
   return (
     <>
       <h1>Recipes</h1>
       <p>
-        <Link href="/new">New Recipe</Link>
+        <Link href="/handleRecipe/create">New Recipe</Link>
       </p>
       <section>
         <h2>All Recipes</h2>
@@ -25,6 +42,9 @@ export default function Homepage() {
                 steps={recipe.steps}
                 id={recipe._id}
               />
+
+              <Link href={`/handleRecipe/${recipe._id}/edit`}>Edit</Link>
+              <button onClick={() => handleDelete(recipe._id)}>X</button>
             </li>
           ))}
         </ul>
