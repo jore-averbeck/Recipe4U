@@ -1,6 +1,27 @@
 import Link from "next/link";
 import useSWR from "swr";
 import Card from "../components/Card.js";
+import styled from "styled-components";
+
+const CardContainer = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.8rem;
+  list-style-type: none;
+  padding: 0;
+  margin: 2rem 0rem 0rem 1rem;
+  justify-content: center;
+`;
+
+const StyledList = styled.li`
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  margin-left: 0.7rem;
+  margin-bottom: 0.1rem;
+  padding: 1rem;
+  width: 300px;
+  height: 362px;
+`;
 
 export default function Homepage() {
   const { data, mutate } = useSWR("/api/recipes", { fallbackData: [] });
@@ -12,7 +33,7 @@ export default function Homepage() {
 
     if (response.ok) {
       await response.json();
-      mutate(); // Refresh data after deletion
+      mutate();
     } else {
       console.error(
         "Error deleting recipe:",
@@ -31,9 +52,9 @@ export default function Homepage() {
       </p>
       <section>
         <h2>All Recipes</h2>
-        <ul>
+        <CardContainer>
           {data.map((recipe) => (
-            <li key={recipe._id}>
+            <StyledList key={recipe._id}>
               <Card
                 title={recipe.title}
                 description={recipe.description}
@@ -42,12 +63,9 @@ export default function Homepage() {
                 steps={recipe.steps}
                 id={recipe._id}
               />
-
-              <Link href={`/handleRecipe/${recipe._id}/edit`}>Edit</Link>
-              <button onClick={() => handleDelete(recipe._id)}>X</button>
-            </li>
+            </StyledList>
           ))}
-        </ul>
+        </CardContainer>
       </section>
     </>
   );
