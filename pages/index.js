@@ -2,6 +2,8 @@ import Link from "next/link";
 import useSWR from "swr";
 import Card from "../components/Card.js";
 import styled from "styled-components";
+import Navigation from "@/components/Navigation.js";
+import Header from "@/components/Header.js";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -21,6 +23,10 @@ const StyledList = styled.li`
   padding: 1rem;
   width: 300px;
   height: 362px;
+`;
+
+const Container = styled.div`
+  margin-bottom: 5rem;
 `;
 
 export default function Homepage() {
@@ -43,13 +49,10 @@ export default function Homepage() {
     }
   }
 
-  console.log(data);
   return (
-    <>
-      <h1>Recipes</h1>
-      <p>
-        <Link href="/handleRecipe/create">New Recipe</Link>
-      </p>
+    <Container>
+      <Header />
+
       <section>
         <h2>All Recipes</h2>
         <CardContainer>
@@ -67,6 +70,7 @@ export default function Homepage() {
           ))}
         </CardContainer>
       </section>
-    </>
+      <Navigation />
+    </Container>
   );
 }
