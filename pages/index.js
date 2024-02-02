@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
 import { ClipLoader } from "react-spinners";
-import Loader from "react-loaders";
+import Loader from "@/components/Loader.js";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -55,7 +55,7 @@ export default function Homepage() {
   if (isLoading || showLoader) {
     return (
       <CenteredContainer>
-        <ClipLoader />
+        <Loader />
       </CenteredContainer>
     );
   }

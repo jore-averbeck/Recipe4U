@@ -1,39 +1,18 @@
 import { motion } from "framer-motion";
 
-const Loader = () => {
-  const variants = {
-    initial: {
-      scaleY: 0.5,
-      opacity: 0,
-    },
-    animate: {
-      scaleY: 1,
-      opacity: 1,
-      transition: {
-        repeat: Infinity,
-        repeatType: "mirror",
-        duration: 1,
-        ease: "circIn",
-      },
-    },
-  };
-
+export default function Loader() {
   return (
     <motion.div
-      transition={{
-        staggerChildren: 0.25,
+      animate={{
+        scale: [1, 2, 2, 1, 1],
+        rotate: [0, 0, 270, 270, 0],
+        borderRadius: ["20%", "20%", "50%", "50%", "20%"],
       }}
-      initial="initial"
-      animate="animate"
-      className="flex gap-1"
-    >
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-      <motion.div variants={variants} className="h-12 w-2 bg-white" />
-    </motion.div>
+      style={{
+        width: 100,
+        height: 100,
+        backgroundColor: " #222c61",
+      }}
+    />
   );
-};
-
-export default Loader;
+}
