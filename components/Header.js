@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPizzaSlice } from "@fortawesome/free-solid-svg-icons";
 
 const StyledHeader = styled.header`
   margin-bottom: 2rem;
-  justify-content: space-around;
+  justify-content: center;
   display: flex;
-  gap: 0.5rem;
   align-items: center;
   width: 100%;
-  padding: 0.5rem;
+  gap: 1rem;
   height: 13vh;
   min-height: 50px;
   color: #fafafa;
@@ -15,14 +16,15 @@ const StyledHeader = styled.header`
   background-color: #222c61;
 `;
 
-const Headline = styled.h1`
-  padding-left: 50px;
+const StyledIcon = styled(FontAwesomeIcon)`
+  font-size: 3rem;
 `;
 
 export default function Header() {
   return (
     <StyledHeader>
-      <Headline>Cook-Yeah!</Headline>
+      <StyledIcon icon={faPizzaSlice} />
+      <h1>Recipe4U</h1>
     </StyledHeader>
   );
 }

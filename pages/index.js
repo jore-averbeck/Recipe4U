@@ -36,6 +36,26 @@ const CenteredContainer = styled.div`
   align-items: center;
   height: 100vh;
 `;
+
+const Title = styled.h2`
+  /* text-align: center; */
+  margin-left: 5rem;
+`;
+
+const CountContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const Count = styled.div`
+  align-self: center;
+  font-size: 1.5rem;
+  background-color: #222c61;
+  padding: 0.5rem;
+  color: white;
+  border-radius: 0.5rem;
+`;
+
 export default function Homepage() {
   const { data, mutate, isLoading } = useSWR("/api/recipes", {
     fallbackData: [],
@@ -81,8 +101,10 @@ export default function Homepage() {
       <Header />
 
       <section>
-        <h2>All Recipes</h2>
-
+        <CountContainer>
+          <Title>All Recipes</Title>
+          <Count>{data.length}</Count>
+        </CountContainer>
         <CardContainer>
           {data.map((recipe) => (
             <StyledList key={recipe._id}>
