@@ -3,7 +3,11 @@ import Image from "next/image";
 import styled from "styled-components";
 import useSWR from "swr";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faTrash,
+  faHeart as Heart,
+} from "@fortawesome/free-solid-svg-icons";
 
 const StyledLink = styled(Link)`
   color: inherit;
@@ -63,8 +67,31 @@ const Title = styled.h2`
   padding-left: 0.5rem;
 `;
 
-export default function Card({ title, image, id }) {
+const DefaultHeart = styled(FontAwesomeIcon)`
+  font-size: 2rem;
+  color: #222c61;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+`;
+
+const RedHeart = styled(FontAwesomeIcon)`
+  font-size: 2rem;
+  color: red;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+`;
+
+export default function Card({
+  title,
+  image,
+  id,
+  onToggleFavorites,
+  favorites,
+}) {
   const { data, mutate } = useSWR("/api/recipes", { fallbackData: [] });
+  const isFavorite = favorites && favorites.includes(id);
 
   async function handleDelete(id) {
     const response = await fetch(`/api/recipes/${id}`, {
@@ -95,6 +122,15 @@ export default function Card({ title, image, id }) {
           </Link>
           <StyledButton onClick={() => handleDelete(id)}>
             <StyledTrash icon={faTrash} />
+          </StyledButton>
+          <StyledButton
+            onClick={(event) => event && onToggleFavorites(id, event)}
+          >
+            {isFavorite ? (
+              <RedHeart icon={Heart} />
+            ) : (
+              <DefaultHeart icon={Heart} />
+            )}
           </StyledButton>
         </Container>
       </Article>

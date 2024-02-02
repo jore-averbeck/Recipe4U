@@ -56,7 +56,7 @@ const Count = styled.div`
   border-radius: 0.5rem;
 `;
 
-export default function Homepage() {
+export default function Homepage({ handleToggleFavorites, favorites }) {
   const { data, mutate, isLoading } = useSWR("/api/recipes", {
     fallbackData: [],
   });
@@ -115,6 +115,8 @@ export default function Homepage() {
                 ingredients={recipe.ingredients}
                 steps={recipe.steps}
                 id={recipe._id}
+                onToggleFavorites={handleToggleFavorites}
+                favorites={favorites}
               />
             </StyledList>
           ))}

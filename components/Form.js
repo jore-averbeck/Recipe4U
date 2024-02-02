@@ -3,10 +3,23 @@ import styled from "styled-components";
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-width: 500px;
-  width: 80%;
+  justify-content: center;
+  gap: 0.8rem;
+  max-width: 400px;
+  width: 90%;
   margin-left: 1rem;
+  padding: 2rem;
+  background-color: #fafafa;
+  color: #222c61;
+  font-weight: bold;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+`;
+
+const StyledInput = styled.input`
+  border: 0.1rem solid #222c61;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
 `;
 
 export default function ServiceForm({ recipe = {}, onSubmit }) {
@@ -23,23 +36,29 @@ export default function ServiceForm({ recipe = {}, onSubmit }) {
     <>
       <StyledForm onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
-        <input id="title" name="title" defaultValue={recipe.title} />
+        <StyledInput id="title" name="title" defaultValue={recipe.title} />
         <label htmlFor="description">description</label>
-        <input
+        <StyledInput
           id="description"
           name="description"
           defaultValue={recipe.description}
         />
         <label htmlFor="image">Image</label>
-        <input id="image" name="image" defaultValue={recipe.image} />
+        <StyledInput id="image" name="image" defaultValue={recipe.image} />
         <label htmlFor="ingredients">ingredients</label>
-        <input
+        <StyledInput
           id="ingredients"
           name="ingredients"
           defaultValue={recipe.ingredients}
+          placeholder="oats, sugar, salt..."
         />
         <label htmlFor="steps">steps</label>
-        <input id="steps" name="steps" defaultValue={recipe.steps} />
+        <StyledInput
+          id="steps"
+          name="steps"
+          defaultValue={recipe.steps}
+          placeholder="first, second, third..."
+        />
         <button>Save</button>
       </StyledForm>
     </>
