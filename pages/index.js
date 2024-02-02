@@ -1,9 +1,11 @@
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Card from "../components/Card.js";
 import styled from "styled-components";
 import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
+import { ClipLoader } from "react-spinners";
+import Loader from "react-loaders";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -29,8 +31,34 @@ const Container = styled.div`
   margin-bottom: 5rem;
 `;
 
+const CenteredContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 export default function Homepage() {
-  const { data, mutate } = useSWR("/api/recipes", { fallbackData: [] });
+  const { data, mutate, isLoading } = useSWR("/api/recipes", {
+    fallbackData: [],
+  });
+
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLoader(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading || showLoader) {
+    return (
+      <CenteredContainer>
+        <ClipLoader />
+      </CenteredContainer>
+    );
+  }
 
   async function handleDelete(id) {
     const response = await fetch(`/api/recipes/${id}`, {
@@ -55,6 +83,7 @@ export default function Homepage() {
 
       <section>
         <h2>All Recipes</h2>
+
         <CardContainer>
           {data.map((recipe) => (
             <StyledList key={recipe._id}>
