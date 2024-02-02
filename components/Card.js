@@ -39,6 +39,7 @@ const StyledEdit = styled(FontAwesomeIcon)`
   font-size: 1.2rem;
   position: absolute;
   bottom: 1rem;
+  right: 2.5rem;
 `;
 
 const StyledTrash = styled(FontAwesomeIcon)`
@@ -46,6 +47,7 @@ const StyledTrash = styled(FontAwesomeIcon)`
   font-size: 1.2rem;
   position: absolute;
   bottom: 1rem;
+  right: 0.5rem;
 `;
 
 const Container = styled.div`
