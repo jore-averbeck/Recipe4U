@@ -50,7 +50,7 @@ export default function Navigation() {
           </StyledLink>
         </StyledListItem>
         <StyledListItem>
-          <StyledLink href="/favourites">
+          <StyledLink href="/favorites">
             <StyledIcon icon={faHeart} />
           </StyledLink>
         </StyledListItem>

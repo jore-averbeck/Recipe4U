@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
     data: recipes,
     isLoading,
     error,
-  } = useSWR("/api/ideas", fetcher, {
+  } = useSWR("/api/recipes", fetcher, {
     fallbackData: [],
   });
 
@@ -34,6 +34,7 @@ export default function App({ Component, pageProps }) {
           {...pageProps}
           favorites={favorites}
           handleToggleFavorites={handleToggleFavorites}
+          recipes={recipes}
         />
       </SWRConfig>
     </>
