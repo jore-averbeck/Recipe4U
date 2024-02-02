@@ -8,12 +8,7 @@ export default createGlobalStyle`
   }
 
   :root {
-    --primary-color: #118ab2;
-    --primary-color-hover: #0077b6;
-    --danger-color: #9d0208;
-    --danger-color-hover: crimson;
-    --neutral-color: lightGray;
-    --neutral-color-hover: gray;
+   
   }
 
   html {

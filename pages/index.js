@@ -4,7 +4,6 @@ import Card from "../components/Card.js";
 import styled from "styled-components";
 import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
-import { ClipLoader } from "react-spinners";
 import Loader from "@/components/Loader.js";
 
 const CardContainer = styled.ul`
