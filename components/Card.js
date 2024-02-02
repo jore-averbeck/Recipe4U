@@ -31,15 +31,17 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledEdit = styled(FontAwesomeIcon)`
-  color: black;
+  color: #222c61;
   font-size: 1.2rem;
   position: absolute;
+  bottom: 1rem;
 `;
 
 const StyledTrash = styled(FontAwesomeIcon)`
-  color: black;
+  color: #222c61;
   font-size: 1.2rem;
   position: absolute;
+  bottom: 1rem;
 `;
 
 const Container = styled.div`
