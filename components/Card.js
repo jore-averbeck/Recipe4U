@@ -65,8 +65,10 @@ const StyledButton = styled.button`
   height: 10px;
 `;
 
-const Title = styled.h2`
+const Title = styled.h3`
   padding-left: 0.5rem;
+  max-width: 80%;
+  margin-top: 0.1rem;
 `;
 
 const DefaultHeart = styled(FontAwesomeIcon)`

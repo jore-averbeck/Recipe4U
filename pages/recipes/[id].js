@@ -10,7 +10,7 @@ const Article = styled.article`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
-  gap: 1rem;
+  gap: 1.7rem;
   margin: 2rem auto;
   margin-bottom: 5rem;
   width: 90%;
@@ -35,6 +35,7 @@ const StyledImage = styled(Image)`
 const Title = styled.h2`
   justify-self: center;
   height: 10px;
+  text-align: center;
 `;
 
 const Description = styled.p`
