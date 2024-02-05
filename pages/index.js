@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
 import Loader from "@/components/Loader.js";
+import Fuse from "fuse.js";
+import Searchbar from "@/components/Searchbar.js";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -56,12 +58,21 @@ const Count = styled.div`
   border-radius: 0.5rem;
 `;
 
-export default function Homepage({ handleToggleFavorites, favorites }) {
-  const { data, mutate, isLoading } = useSWR("/api/recipes", {
+export default function Homepage({
+  handleToggleFavorites,
+  favorites,
+  recipes,
+}) {
+  const { data, isLoading } = useSWR("/api/recipes", {
     fallbackData: [],
   });
-
+  const [suggestions, setSuggestions] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   const [showLoader, setShowLoader] = useState(true);
+  const fuse = new Fuse(recipes, {
+    keys: ["title"],
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,7 +80,7 @@ export default function Homepage({ handleToggleFavorites, favorites }) {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [recipes, searchValue]); // Update showLoader when recipes or searchValue change
 
   if (isLoading || showLoader) {
     return (
@@ -79,34 +90,35 @@ export default function Homepage({ handleToggleFavorites, favorites }) {
     );
   }
 
-  async function handleDelete(id) {
-    const response = await fetch(`/api/recipes/${id}`, {
-      method: "DELETE",
+  function handleClickEvent(value) {
+    setSearchValue(value);
+    const results = fuse.search(value);
+    const filteredResults = results.filter((result) => {
+      return result.item.title.toLowerCase() === value.toLowerCase();
     });
+    setSearchResults(filteredResults.map((result) => result.item));
+  }
 
-    if (response.ok) {
-      await response.json();
-      mutate();
-    } else {
-      console.error(
-        "Error deleting recipe:",
-        response.status,
-        response.statusText
-      );
-    }
+  function handleInputChange(value) {
+    setSearchValue(value);
+    setSuggestions(fuse.search(value));
   }
 
   return (
     <Container>
       <Header />
-
+      <Searchbar
+        suggestions={suggestions}
+        onInputChange={handleInputChange}
+        onClickEvent={handleClickEvent}
+      />
       <section>
         <CountContainer>
-          <Title>All Recipes</Title>
-          <Count>{data.length}</Count>
+          <Title>{searchValue ? "Search Results" : "All Recipes"}</Title>
+          <Count>{searchValue ? searchResults.length : data.length}</Count>
         </CountContainer>
         <CardContainer>
-          {data.map((recipe) => (
+          {(searchValue ? searchResults : data).map((recipe) => (
             <StyledList key={recipe._id}>
               <Card
                 title={recipe.title}
