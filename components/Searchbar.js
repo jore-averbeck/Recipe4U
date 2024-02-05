@@ -10,6 +10,8 @@ const SearchbarContainer = styled.div`
   margin-left: 2rem;
   width: 60%;
   padding: 0.1rem;
+  display: flex;
+  justify-content: space-between;
   border-radius: 0.8rem;
 `;
 
