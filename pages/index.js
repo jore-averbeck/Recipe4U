@@ -82,6 +82,12 @@ export default function Homepage({
     return () => clearTimeout(timer);
   }, [recipes, searchValue]);
 
+  useEffect(() => {
+    if (!searchClicked) {
+      setSuggestions([]);
+    }
+  }, [searchClicked]);
+
   if (isLoading || showLoader) {
     return (
       <CenteredContainer>
@@ -116,7 +122,7 @@ export default function Homepage({
       />
       <section>
         <CountContainer>
-          {searchClicked || searchValue ? (
+          {searchClicked ? (
             <>
               <Title>Search Results</Title>
               <Count>{searchResults.length}</Count>

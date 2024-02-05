@@ -1,15 +1,45 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 
-export default function Searchbar({
-  suggestions,
-  onInputChange,
-  onClickEvent,
-}) {
+const SearchbarContainer = styled.div`
+  background-color: #fafafa;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  margin-left: 2rem;
+  width: 60%;
+  padding: 0.1rem;
+  border-radius: 0.8rem;
+`;
+
+const SearchInput = styled.input`
+  padding: 0.2rem;
+  margin-left: 0.3rem;
+  margin-bottom: 0.1rem;
+  width: 82%;
+  border: none;
+
+  &:active {
+    border-color: blue;
+  }
+`;
+
+const StyledButton = styled.button`
+  background: #222c61;
+  border: none;
+  height: 1.7rem;
+  border-radius: 0.8rem;
+`;
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: #fafafa;
+  font-size: 1.1rem;
+`;
+
+export default function Searchbar({ onInputChange, onClickEvent }) {
   const [inputValue, setInputValue] = useState("");
-  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const router = useRouter();
 
   function handleChangeEvent(e) {
@@ -26,25 +56,31 @@ export default function Searchbar({
     onClickEvent(inputValue);
   }
 
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  }
+
   return (
     <>
-      <div>
-        <input
-          placeholder="Search for titles "
+      <SearchbarContainer>
+        <SearchInput
+          placeholder="Search"
           value={inputValue}
           onChange={handleChangeEvent}
+          onKeyDown={handleKeyDown}
         />
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={handleReset}>reset</button>
-      </div>
-      <ul>
-        {showSuggestions &&
-          suggestions.map(({ item }, index) => (
-            <li key={index}>
-              <Link href={`/recipes/${item._id}`}>{item.title}</Link>
-            </li>
-          ))}
-      </ul>
+        {showSuggestions ? (
+          <StyledButton onClick={handleSearch}>
+            <StyledIcon icon={faSearch} />
+          </StyledButton>
+        ) : (
+          <StyledButton onClick={handleReset}>
+            <StyledIcon icon={faArrowsRotate} />
+          </StyledButton>
+        )}
+      </SearchbarContainer>
     </>
   );
 }
