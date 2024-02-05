@@ -40,7 +40,6 @@ const CenteredContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  /* text-align: center; */
   margin-left: 5rem;
 `;
 
@@ -70,6 +69,7 @@ export default function Homepage({
   const [searchResults, setSearchResults] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [showLoader, setShowLoader] = useState(true);
+  const [searchClicked, setSearchClicked] = useState(false);
   const fuse = new Fuse(recipes, {
     keys: ["title"],
   });
@@ -80,7 +80,7 @@ export default function Homepage({
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [recipes, searchValue]); // Update showLoader when recipes or searchValue change
+  }, [recipes, searchValue]);
 
   if (isLoading || showLoader) {
     return (
@@ -91,6 +91,7 @@ export default function Homepage({
   }
 
   function handleClickEvent(value) {
+    setSearchClicked(true);
     setSearchValue(value);
     const results = fuse.search(value);
     const filteredResults = results.filter((result) => {
@@ -100,6 +101,7 @@ export default function Homepage({
   }
 
   function handleInputChange(value) {
+    setSearchClicked(false);
     setSearchValue(value);
     setSuggestions(fuse.search(value));
   }
@@ -108,30 +110,41 @@ export default function Homepage({
     <Container>
       <Header />
       <Searchbar
-        suggestions={suggestions}
+        suggestions={searchClicked ? suggestions : []}
         onInputChange={handleInputChange}
         onClickEvent={handleClickEvent}
       />
       <section>
         <CountContainer>
-          <Title>{searchValue ? "Search Results" : "All Recipes"}</Title>
-          <Count>{searchValue ? searchResults.length : data.length}</Count>
+          {searchClicked || searchValue ? (
+            <>
+              <Title>Search Results</Title>
+              <Count>{searchResults.length}</Count>
+            </>
+          ) : (
+            <>
+              <Title>All Recipes</Title>
+              <Count>{data.length}</Count>
+            </>
+          )}
         </CountContainer>
         <CardContainer>
-          {(searchValue ? searchResults : data).map((recipe) => (
-            <StyledList key={recipe._id}>
-              <Card
-                title={recipe.title}
-                description={recipe.description}
-                image={recipe.image}
-                ingredients={recipe.ingredients}
-                steps={recipe.steps}
-                id={recipe._id}
-                onToggleFavorites={handleToggleFavorites}
-                favorites={favorites}
-              />
-            </StyledList>
-          ))}
+          {(searchValue && searchResults.length > 0 ? searchResults : data).map(
+            (recipe) => (
+              <StyledList key={recipe._id}>
+                <Card
+                  title={recipe.title}
+                  description={recipe.description}
+                  image={recipe.image}
+                  ingredients={recipe.ingredients}
+                  steps={recipe.steps}
+                  id={recipe._id}
+                  onToggleFavorites={handleToggleFavorites}
+                  favorites={favorites}
+                />
+              </StyledList>
+            )
+          )}
         </CardContainer>
       </section>
       <Navigation />
