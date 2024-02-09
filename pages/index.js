@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Card from "../components/Card.js";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
 import Loader from "@/components/Loader.js";
 import Fuse from "fuse.js";
 import Searchbar from "@/components/Searchbar.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -30,6 +32,7 @@ const StyledList = styled.li`
 
 const Container = styled.div`
   margin-bottom: 5rem;
+  position: relative;
 `;
 
 const CenteredContainer = styled.div`
@@ -46,15 +49,36 @@ const Title = styled.h2`
 const CountContainer = styled.div`
   display: flex;
   gap: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: -1rem;
 `;
 
 const Count = styled.div`
   align-self: center;
   font-size: 1.5rem;
   background-color: var(--primary);
-  padding: 0.5rem;
+  padding: 0.3rem;
   color: var(--fourth);
   border-radius: 0.5rem;
+`;
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  font-size: 1.5rem;
+  color: var(--secondary);
+`;
+
+const StyledButton = styled.button`
+  background: transparent;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+`;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${(props) => (props.isDarkMode ? "#1f1f1f" : "#ffffff")}; 
+    color: ${(props) => (props.isDarkMode ? "#ffffff" : "#000000")}; }
 `;
 
 export default function Homepage({
@@ -73,6 +97,7 @@ export default function Homepage({
   const fuse = new Fuse(recipes, {
     keys: ["title"],
   });
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -96,6 +121,10 @@ export default function Homepage({
     );
   }
 
+  function toggleDarkMode() {
+    setIsDarkMode(!isDarkMode);
+  }
+
   function handleClickEvent(value) {
     setSearchClicked(true);
     setSearchValue(value);
@@ -114,7 +143,15 @@ export default function Homepage({
 
   return (
     <Container>
+      <GlobalStyle isDarkMode={isDarkMode} />
       <Header />
+      <StyledButton onClick={toggleDarkMode}>
+        {isDarkMode ? (
+          <StyledIcon icon={faSun} />
+        ) : (
+          <StyledIcon icon={faMoon} />
+        )}
+      </StyledButton>
       <Searchbar
         suggestions={searchClicked ? suggestions : []}
         onInputChange={handleInputChange}
