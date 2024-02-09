@@ -51,9 +51,9 @@ const CountContainer = styled.div`
 const Count = styled.div`
   align-self: center;
   font-size: 1.5rem;
-  background-color: #222c61;
+  background-color: var(--primary);
   padding: 0.5rem;
-  color: white;
+  color: var(--fourth);
   border-radius: 0.5rem;
 `;
 

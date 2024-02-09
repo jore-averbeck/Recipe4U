@@ -11,9 +11,9 @@ const StyledHeader = styled.header`
   gap: 1rem;
   height: 13vh;
   min-height: 50px;
-  color: #fafafa;
+  color: var(--secondary);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-  background-color: #222c61;
+  background-color: var(--primary);
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`

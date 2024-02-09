@@ -17,9 +17,9 @@ const Article = styled.article`
   max-height: 60%;
   max-width: 500px;
   overflow: auto;
-  background-color: #222c61;
-  color: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: var(--primary);
+  color: var(--fourth);
+  box-shadow: var(--primary-shadow);
   border-radius: 0.5rem;
 `;
 
@@ -46,8 +46,8 @@ const Description = styled.p`
 `;
 
 const Steps = styled.ol`
-  background-color: #fafafa;
-  color: #222c61;
+  background-color: var(--secondary);
+  color: var(--primary);
   margin-bottom: -0.1rem;
 `;
 

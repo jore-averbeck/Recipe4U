@@ -12,7 +12,7 @@ const StyledForm = styled.form`
   background-color: #fafafa;
   color: #222c61;
   font-weight: bold;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--primary-shadow);
   overflow-y: auto;
 `;
 
