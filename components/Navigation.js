@@ -9,8 +9,8 @@ const StyledNavigation = styled.nav`
   bottom: -0.1rem;
   width: 100%;
   height: 60px;
-  box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.2);
-  background-color: #fafafa;
+  box-shadow: var(--secondary-shadow);
+  background-color: var(--secondary);
 `;
 
 const StyledUnorderedList = styled.ul`
@@ -31,7 +31,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: #222c61;
+  color: var(--primary);
   font-size: 2rem;
 `;
 

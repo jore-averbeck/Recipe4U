@@ -1,5 +1,4 @@
 import Head from "next/head.js";
-import styled from "styled-components";
 
 import Header from "./Header";
 

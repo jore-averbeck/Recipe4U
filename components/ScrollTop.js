@@ -7,7 +7,7 @@ const ScrollToTopButton = styled.button`
   right: 15px;
   padding-top: 0.2rem;
   display: ${(props) => (props.visible ? "block" : "none")};
-  background-color: orange;
+  background-color: var(--third);
   color: white;
   border: none;
   border-radius: 50%;

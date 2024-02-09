@@ -20,8 +20,8 @@ const Article = styled.article`
   position: relative;
   height: 100%;
   padding-bottom: 1rem;
-  background-color: #fafafa;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: var(--fourth);
+  box-shadow: var(--primary-shadow);
   border-radius: 0.5rem;
 `;
 
@@ -35,7 +35,7 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledEdit = styled(FontAwesomeIcon)`
-  color: #222c61;
+  color: var(--primary);
   font-size: 1.2rem;
   position: absolute;
   bottom: 1rem;
@@ -43,7 +43,7 @@ const StyledEdit = styled(FontAwesomeIcon)`
 `;
 
 const StyledTrash = styled(FontAwesomeIcon)`
-  color: #222c61;
+  color: var(--primary);
   font-size: 1.2rem;
   position: absolute;
   bottom: 1rem;
@@ -73,7 +73,7 @@ const Title = styled.h3`
 
 const DefaultHeart = styled(FontAwesomeIcon)`
   font-size: 2rem;
-  color: #222c61;
+  color: var(--primary);
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
