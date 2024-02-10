@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import Instructions from "./Instruction";
 
 const StyledForm = styled.form`
@@ -12,7 +10,7 @@ const StyledForm = styled.form`
   gap: 0.8rem;
   max-width: 400px;
   width: 90%;
-  margin-left: 1rem;
+  margin: 0 0 5rem 0.25rem;
   padding: 2rem;
   background-color: #fafafa;
   color: #222c61;

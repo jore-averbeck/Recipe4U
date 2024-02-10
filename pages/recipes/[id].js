@@ -49,8 +49,7 @@ const Steps = styled.ol`
   background-color: var(--secondary);
   color: var(--primary);
   margin-bottom: -0.1rem;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
+  padding: 2rem 0 1rem;
 `;
 
 const Duration = styled.p`
