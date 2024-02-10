@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 const StyledForm = styled.form`
   display: flex;
@@ -23,6 +24,7 @@ const StyledInput = styled.input`
 `;
 
 export default function ServiceForm({ recipe = {}, onSubmit }) {
+  const [duration, setDuration] = useState("");
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
@@ -32,6 +34,10 @@ export default function ServiceForm({ recipe = {}, onSubmit }) {
 
     onSubmit(data);
   }
+  function onDurationChange(event) {
+    setDuration(event.target.value);
+  }
+
   return (
     <>
       <StyledForm onSubmit={handleSubmit}>
@@ -45,6 +51,26 @@ export default function ServiceForm({ recipe = {}, onSubmit }) {
         />
         <label htmlFor="image">Image</label>
         <StyledInput id="image" name="image" defaultValue={recipe.image} />
+        <label htmlFor="difficulty">Difficulty</label>
+        <select
+          id="difficulty"
+          name="difficulty"
+          defaultValue={recipe.difficulty}
+        >
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="difficult">Difficult</option>
+        </select>
+        <label htmlFor="duration">Duration: {duration} minutes</label>
+        <input
+          type="range"
+          id="duration"
+          name="duration"
+          min="0"
+          max="120"
+          defaultValue={recipe.duration}
+          onChange={onDurationChange}
+        />
         <label htmlFor="ingredients">ingredients</label>
         <StyledInput
           id="ingredients"

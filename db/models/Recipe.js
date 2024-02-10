@@ -21,7 +21,7 @@ const schema = new Schema(
     ],
     duration: [
       {
-        type: String,
+        type: Number,
         required: true,
       },
     ],
