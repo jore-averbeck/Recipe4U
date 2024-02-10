@@ -26,8 +26,17 @@ const StyledInput = styled.input`
   border-radius: 0.2rem;
   padding: 0.2rem;
 `;
+const defaultRecipe = {
+  title: "",
+  description: "",
+  image: "",
+  difficulty: "easy",
+  duration: 0,
+  ingredients: "",
+  instructions: [{ id: uuidv4(), step: "" }],
+};
 
-export default function ServiceForm({ recipe = {}, onSubmit }) {
+export default function ServiceForm({ recipe = defaultRecipe, onSubmit }) {
   const [instructions, setInstructions] = useState(
     recipe.instructions ? recipe.instructions : [{ id: uuidv4(), value: "" }]
   );
@@ -66,7 +75,6 @@ export default function ServiceForm({ recipe = {}, onSubmit }) {
       }));
 
     onSubmit(data);
-    console.log(event.target.value);
   }
   function onDurationChange(event) {
     setDuration(event.target.value);
