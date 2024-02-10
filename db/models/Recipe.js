@@ -13,6 +13,18 @@ const schema = new Schema(
     image: {
       type: String,
     },
+    difficulty: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    duration: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
 
     ingredients: [
       {
