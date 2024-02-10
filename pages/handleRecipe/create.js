@@ -5,7 +5,9 @@ import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
 import styled from "styled-components";
 
-const Title = styled.h2``;
+const Title = styled.h2`
+  color: ${(props) => (props.isDarkMode ? "#ffffff" : "inherit")};
+`;
 
 const Container = styled.div`
   margin-bottom: 5rem;
@@ -15,7 +17,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-export default function CreateRecipe() {
+export default function CreateRecipe({ isDarkMode }) {
   const router = useRouter();
 
   async function onSubmit(data) {
@@ -35,7 +37,7 @@ export default function CreateRecipe() {
   return (
     <Container>
       <Header />
-      <Title>Create a Recipe</Title>
+      <Title isDarkMode={isDarkMode}>Create a Recipe</Title>
       <Form onSubmit={onSubmit} />
       <Navigation />
     </Container>

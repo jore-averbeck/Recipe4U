@@ -83,7 +83,7 @@ const DefaultHeart = styled(FontAwesomeIcon)`
 
 const RedHeart = styled(FontAwesomeIcon)`
   font-size: 2rem;
-  color: red;
+  color: var(--third);
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
