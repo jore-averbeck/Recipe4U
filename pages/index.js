@@ -7,8 +7,7 @@ import Header from "@/components/Header.js";
 import Loader from "@/components/Loader.js";
 import Fuse from "fuse.js";
 import Searchbar from "@/components/Searchbar.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import DarkmodeButton from "@/components/DarkmodeButton.js";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -44,6 +43,7 @@ const CenteredContainer = styled.div`
 
 const Title = styled.h2`
   margin-left: 5rem;
+  color: ${(props) => (props.isDarkMode ? "#ffffff" : "inherit")};
 `;
 
 const CountContainer = styled.div`
@@ -62,23 +62,10 @@ const Count = styled.div`
   border-radius: 0.5rem;
 `;
 
-const StyledIcon = styled(FontAwesomeIcon)`
-  font-size: 1.5rem;
-  color: var(--secondary);
-`;
-
-const StyledButton = styled.button`
-  background: transparent;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  border: none;
-`;
-
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${(props) => (props.isDarkMode ? "#1f1f1f" : "#ffffff")}; 
-    color: ${(props) => (props.isDarkMode ? "#ffffff" : "#000000")}; }
+  }
 `;
 
 export default function Homepage({
@@ -145,13 +132,7 @@ export default function Homepage({
     <Container>
       <GlobalStyle isDarkMode={isDarkMode} />
       <Header />
-      <StyledButton onClick={toggleDarkMode}>
-        {isDarkMode ? (
-          <StyledIcon icon={faSun} />
-        ) : (
-          <StyledIcon icon={faMoon} />
-        )}
-      </StyledButton>
+      <DarkmodeButton isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <Searchbar
         suggestions={searchClicked ? suggestions : []}
         onInputChange={handleInputChange}
@@ -161,12 +142,12 @@ export default function Homepage({
         <CountContainer>
           {searchClicked ? (
             <>
-              <Title>Search Results</Title>
+              <Title isDarkMode={isDarkMode}>Search Results</Title>
               <Count>{searchResults.length}</Count>
             </>
           ) : (
             <>
-              <Title>All Recipes</Title>
+              <Title isDarkMode={isDarkMode}>All Recipes</Title>
               <Count>{data.length}</Count>
             </>
           )}
