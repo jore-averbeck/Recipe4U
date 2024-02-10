@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Card from "../components/Card.js";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
 import Loader from "@/components/Loader.js";
 import Fuse from "fuse.js";
 import Searchbar from "@/components/Searchbar.js";
+import DarkmodeButton from "@/components/DarkmodeButton.js";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -30,6 +31,7 @@ const StyledList = styled.li`
 
 const Container = styled.div`
   margin-bottom: 5rem;
+  position: relative;
 `;
 
 const CenteredContainer = styled.div`
@@ -41,20 +43,29 @@ const CenteredContainer = styled.div`
 
 const Title = styled.h2`
   margin-left: 5rem;
+  color: ${(props) => (props.isDarkMode ? "#ffffff" : "inherit")};
 `;
 
 const CountContainer = styled.div`
   display: flex;
   gap: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: -1rem;
 `;
 
 const Count = styled.div`
   align-self: center;
   font-size: 1.5rem;
   background-color: var(--primary);
-  padding: 0.5rem;
+  padding: 0.3rem;
   color: var(--fourth);
   border-radius: 0.5rem;
+`;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${(props) => (props.isDarkMode ? "#1f1f1f" : "#ffffff")}; 
+  }
 `;
 
 export default function Homepage({
@@ -73,6 +84,7 @@ export default function Homepage({
   const fuse = new Fuse(recipes, {
     keys: ["title"],
   });
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -96,6 +108,10 @@ export default function Homepage({
     );
   }
 
+  function toggleDarkMode() {
+    setIsDarkMode(!isDarkMode);
+  }
+
   function handleClickEvent(value) {
     setSearchClicked(true);
     setSearchValue(value);
@@ -114,7 +130,9 @@ export default function Homepage({
 
   return (
     <Container>
+      <GlobalStyle isDarkMode={isDarkMode} />
       <Header />
+      <DarkmodeButton isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <Searchbar
         suggestions={searchClicked ? suggestions : []}
         onInputChange={handleInputChange}
@@ -124,12 +142,12 @@ export default function Homepage({
         <CountContainer>
           {searchClicked ? (
             <>
-              <Title>Search Results</Title>
+              <Title isDarkMode={isDarkMode}>Search Results</Title>
               <Count>{searchResults.length}</Count>
             </>
           ) : (
             <>
-              <Title>All Recipes</Title>
+              <Title isDarkMode={isDarkMode}>All Recipes</Title>
               <Count>{data.length}</Count>
             </>
           )}

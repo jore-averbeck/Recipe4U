@@ -69,6 +69,8 @@ const Title = styled.h3`
   padding-left: 0.5rem;
   max-width: 80%;
   margin-top: 0.1rem;
+  color: ${(props) =>
+    props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
 `;
 
 const DefaultHeart = styled(FontAwesomeIcon)`
