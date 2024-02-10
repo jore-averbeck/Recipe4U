@@ -1,5 +1,8 @@
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 const StyledForm = styled.form`
   display: flex;
@@ -24,15 +27,45 @@ const StyledInput = styled.input`
 `;
 
 export default function ServiceForm({ recipe = {}, onSubmit }) {
+  const [instructions, setInstructions] = useState(
+    recipe.instructions ? recipe.instructions : [{ id: uuidv4(), value: "" }]
+  );
   const [duration, setDuration] = useState("");
+
+  function handleInstructionChange(id, value) {
+    const newInstructions = instructions.map((instruction) =>
+      instruction.id === id ? { ...instruction, step: value } : instruction
+    );
+    setInstructions(newInstructions);
+  }
+  function handleAddInstruction() {
+    const newInstruction = { id: uuidv4(), step: "" };
+    setInstructions([...instructions, newInstruction]);
+  }
+  function handleRemoveInstruction(id) {
+    const newInstructions = instructions.filter(
+      (instruction) => instruction.id !== id
+    );
+    setInstructions(newInstructions);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
 
     data.ingredients = data.ingredients.split(",").map((item) => item.trim());
-    data.steps = data.steps.split(",").map((item) => item.trim());
+    data.instructions = instructions
+      .filter(
+        (instruction) =>
+          typeof instruction.step === "string" && instruction.step.trim() !== ""
+      )
+      .map((instruction, index) => ({
+        id: `${data.id}.${index + 1}`,
+        step: instruction.step.trim(),
+      }));
 
     onSubmit(data);
+    console.log(event.target.value);
   }
   function onDurationChange(event) {
     setDuration(event.target.value);
@@ -78,13 +111,44 @@ export default function ServiceForm({ recipe = {}, onSubmit }) {
           defaultValue={recipe.ingredients}
           placeholder="oats, sugar, salt..."
         />
-        <label htmlFor="steps">steps</label>
-        <StyledInput
-          id="steps"
-          name="steps"
-          defaultValue={recipe.steps}
-          placeholder="first, second, third..."
-        />
+        <label htmlFor="instructions">steps</label>
+        {instructions.map((instruction, index) => (
+          <div key={instruction.id}>
+            <ul>
+              <li>
+                <span>{index + 1}. </span>
+                <textarea
+                  type="text"
+                  id={`instructions-${instruction.id}`}
+                  placeholder="instructions"
+                  value={instruction.step || ""}
+                  onChange={(e) =>
+                    handleInstructionChange(instruction.id, e.target.value)
+                  }
+                  required
+                  minLength={1}
+                  maxLength={150}
+                  wrap="hard"
+                  rows={5}
+                />
+              </li>
+            </ul>
+            <div>
+              <button type="button" onClick={() => handleAddInstruction()}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+              {index > 0 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveInstruction(instruction.id)}
+                >
+                  <FontAwesomeIcon icon={faMinus} />
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+
         <button>Save</button>
       </StyledForm>
     </>

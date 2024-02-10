@@ -54,6 +54,9 @@ const Steps = styled.ol`
 const Duration = styled.p`
   color: white;
 `;
+const Difficulty = styled.p`
+  color: white;
+`;
 
 export default function DetailsPage() {
   const router = useRouter();
@@ -64,7 +67,7 @@ export default function DetailsPage() {
 
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
-  const { steps } = recipe;
+  const { instructions } = recipe;
 
   return (
     <>
@@ -73,12 +76,11 @@ export default function DetailsPage() {
         <Title>{recipe.title}</Title>
         <StyledImage src={recipe.image} width={100} height={100} />
         <Description>{recipe.description}</Description>
-        <Duration>{recipe.duration}</Duration>
+        <Duration>Duration: {recipe.duration}</Duration>
+        <Difficulty>Difficulty: {recipe.difficulty}</Difficulty>
         <Steps>
-          {steps.map((step) => (
-            <li>
-              <p>{step}</p>
-            </li>
+          {instructions.map((instruction) => (
+            <li key={instruction.id}>{instruction.step}</li>
           ))}
         </Steps>
       </Article>
