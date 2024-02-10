@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import Instructions from "./Instruction";
 
 const StyledForm = styled.form`
   display: flex;
@@ -111,43 +112,12 @@ export default function ServiceForm({ recipe = {}, onSubmit }) {
           defaultValue={recipe.ingredients}
           placeholder="oats, sugar, salt..."
         />
-        <label htmlFor="instructions">steps</label>
-        {instructions.map((instruction, index) => (
-          <div key={instruction.id}>
-            <ul>
-              <li>
-                <span>{index + 1}. </span>
-                <textarea
-                  type="text"
-                  id={`instructions-${instruction.id}`}
-                  placeholder="instructions"
-                  value={instruction.step || ""}
-                  onChange={(e) =>
-                    handleInstructionChange(instruction.id, e.target.value)
-                  }
-                  required
-                  minLength={1}
-                  maxLength={150}
-                  wrap="hard"
-                  rows={5}
-                />
-              </li>
-            </ul>
-            <div>
-              <button type="button" onClick={() => handleAddInstruction()}>
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-              {index > 0 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveInstruction(instruction.id)}
-                >
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
+        <Instructions
+          instructions={instructions}
+          onInstructionChange={handleInstructionChange}
+          onAddInstruction={handleAddInstruction}
+          onRemoveInstruction={handleRemoveInstruction}
+        />
 
         <button>Save</button>
       </StyledForm>
