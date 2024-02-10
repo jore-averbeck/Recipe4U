@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Card from "@/components/Card";
 import styled from "styled-components";
+import DarkmodeButton from "@/components/DarkmodeButton";
 
 const Container = styled.div`
   margin-bottom: 5rem;

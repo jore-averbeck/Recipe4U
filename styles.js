@@ -26,6 +26,7 @@ export default createGlobalStyle`
 
   body {
     margin: 0;
+    background-color: ${(props) => (props.isDarkMode ? "#1f1f1f" : "#ffffff")};
     
   }
 `;

@@ -3,12 +3,13 @@ import GlobalStyle from "../styles";
 import fetcher from "@/lib/fetcher";
 import useLocalStorageState from "use-local-storage-state";
 import useSWR from "swr";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }) {
   const [favorites, setFavorites] = useLocalStorageState("favorites", {
     defaultValue: [],
   });
-
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState(false);
   const {
     data: recipes,
     isLoading,
@@ -26,15 +27,21 @@ export default function App({ Component, pageProps }) {
     }
   }
 
+  function toggleDarkMode() {
+    setIsDarkMode(!isDarkMode);
+  }
+
   return (
     <>
       <SWRConfig value={{ fetcher }}>
-        <GlobalStyle />
+        <GlobalStyle isDarkMode={isDarkMode} />
         <Component
           {...pageProps}
           favorites={favorites}
           handleToggleFavorites={handleToggleFavorites}
           recipes={recipes}
+          toggleDarkMode={toggleDarkMode}
+          isDarkMode={isDarkMode}
         />
       </SWRConfig>
     </>

@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 
 const SearchbarContainer = styled.div`
-  background-color: var(--secondary);
+  /* background-color: var(--secondary); */
+  background-color: ${(props) =>
+    props.isDarkMode ? "#3648a3" : "var(--secondary)"};
   box-shadow: var(--third-shadow);
   margin-left: 2rem;
   width: 60%;
@@ -21,6 +23,8 @@ const SearchInput = styled.input`
   margin-bottom: 0.1rem;
   width: 82%;
   border: none;
+  background-color: ${(props) =>
+    props.isDarkMode ? "#3648a3" : "var(--secondary)"};
 
   &:active {
     border-color: blue;
@@ -37,9 +41,10 @@ const StyledButton = styled.button`
 const StyledIcon = styled(FontAwesomeIcon)`
   color: var(--secondary);
   font-size: 1.1rem;
+  color: ${(props) => (props.isDarkMode ? "inherit" : "var(--secondary)")};
 `;
 
-export default function Searchbar({ onInputChange, onClickEvent }) {
+export default function Searchbar({ onInputChange, onClickEvent, isDarkMode }) {
   const [inputValue, setInputValue] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const router = useRouter();
@@ -66,12 +71,13 @@ export default function Searchbar({ onInputChange, onClickEvent }) {
 
   return (
     <>
-      <SearchbarContainer>
+      <SearchbarContainer isDarkMode={isDarkMode}>
         <SearchInput
           placeholder="Search"
           value={inputValue}
           onChange={handleChangeEvent}
           onKeyDown={handleKeyDown}
+          isDarkMode={isDarkMode}
         />
         {showSuggestions ? (
           <StyledButton onClick={handleSearch}>
@@ -79,7 +85,7 @@ export default function Searchbar({ onInputChange, onClickEvent }) {
           </StyledButton>
         ) : (
           <StyledButton onClick={handleReset}>
-            <StyledIcon icon={faArrowsRotate} />
+            <StyledIcon icon={faArrowsRotate} isDarkMode={isDarkMode} />
           </StyledButton>
         )}
       </SearchbarContainer>

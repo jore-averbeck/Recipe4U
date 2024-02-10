@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Card from "../components/Card.js";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import Navigation from "@/components/Navigation.js";
 import Header from "@/components/Header.js";
 import Loader from "@/components/Loader.js";
@@ -62,16 +62,12 @@ const Count = styled.div`
   border-radius: 0.5rem;
 `;
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: ${(props) => (props.isDarkMode ? "#1f1f1f" : "#ffffff")}; 
-  }
-`;
-
 export default function Homepage({
   handleToggleFavorites,
   favorites,
   recipes,
+  toggleDarkMode,
+  isDarkMode,
 }) {
   const { data, isLoading } = useSWR("/api/recipes", {
     fallbackData: [],
@@ -84,7 +80,6 @@ export default function Homepage({
   const fuse = new Fuse(recipes, {
     keys: ["title"],
   });
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -108,10 +103,6 @@ export default function Homepage({
     );
   }
 
-  function toggleDarkMode() {
-    setIsDarkMode(!isDarkMode);
-  }
-
   function handleClickEvent(value) {
     setSearchClicked(true);
     setSearchValue(value);
@@ -130,13 +121,13 @@ export default function Homepage({
 
   return (
     <Container>
-      <GlobalStyle isDarkMode={isDarkMode} />
       <Header />
-      <DarkmodeButton isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <DarkmodeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
       <Searchbar
         suggestions={searchClicked ? suggestions : []}
         onInputChange={handleInputChange}
         onClickEvent={handleClickEvent}
+        isDarkMode={isDarkMode}
       />
       <section>
         <CountContainer>
