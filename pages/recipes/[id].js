@@ -12,7 +12,7 @@ const Article = styled.article`
   grid-template-rows: auto 1fr;
   gap: 1.7rem;
   margin: 2rem auto;
-  margin-bottom: 5rem;
+  margin-bottom: 7rem;
   width: 90%;
   max-height: 60%;
   max-width: 500px;
@@ -49,13 +49,24 @@ const Steps = styled.ol`
   background-color: var(--secondary);
   color: var(--primary);
   margin-bottom: -0.1rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 `;
 
 const Duration = styled.p`
-  color: white;
+  color: var(--primary);
+  font-weight: bold;
 `;
 const Difficulty = styled.p`
-  color: white;
+  color: var(--primary);
+  font-weight: bold;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--secondary);
+  margin-bottom: -3rem;
 `;
 
 export default function DetailsPage() {
@@ -76,8 +87,11 @@ export default function DetailsPage() {
         <Title>{recipe.title}</Title>
         <StyledImage src={recipe.image} width={100} height={100} />
         <Description>{recipe.description}</Description>
-        <Duration>Duration: {recipe.duration}</Duration>
-        <Difficulty>Difficulty: {recipe.difficulty}</Difficulty>
+        <Container>
+          <Duration>{recipe.duration} Minutes</Duration>
+          <Difficulty>Difficulty: {recipe.difficulty}</Difficulty>
+        </Container>
+
         <Steps>
           {instructions.map((instruction) => (
             <li key={instruction.id}>{instruction.step}</li>
