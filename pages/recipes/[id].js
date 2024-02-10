@@ -51,6 +51,10 @@ const Steps = styled.ol`
   margin-bottom: -0.1rem;
 `;
 
+const Duration = styled.p`
+  color: white;
+`;
+
 export default function DetailsPage() {
   const router = useRouter();
   const { isReady } = router;
@@ -69,6 +73,7 @@ export default function DetailsPage() {
         <Title>{recipe.title}</Title>
         <StyledImage src={recipe.image} width={100} height={100} />
         <Description>{recipe.description}</Description>
+        <Duration>{recipe.duration}</Duration>
         <Steps>
           {steps.map((step) => (
             <li>
