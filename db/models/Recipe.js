@@ -13,6 +13,14 @@ const schema = new Schema(
     image: {
       type: String,
     },
+    difficulty: {
+      type: String,
+      required: true,
+    },
+    duration: {
+      type: Number,
+      required: true,
+    },
 
     ingredients: [
       {
@@ -20,10 +28,16 @@ const schema = new Schema(
         required: true,
       },
     ],
-    steps: [
+    instructions: [
       {
-        type: String,
-        required: true,
+        id: {
+          type: String,
+          required: true,
+        },
+        step: {
+          type: String,
+          required: true,
+        },
       },
     ],
   },
