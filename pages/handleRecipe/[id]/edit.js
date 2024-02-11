@@ -2,12 +2,22 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import Form from "../../../components/Form.js";
 import styled from "styled-components";
+import Header from "@/components/Header.js";
+import Navigation from "@/components/Navigation.js";
+
+const Container = styled.div`
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Title = styled.h2`
   color: ${(props) => (props.isDarkMode ? "#fafafa" : "var(--primary)")};
 `;
 
-export default function EditRecipe() {
+export default function EditRecipe({ isDarkMode }) {
   const router = useRouter();
   const { id } = router.query;
   const {
@@ -30,9 +40,11 @@ export default function EditRecipe() {
     return "Loading";
   }
   return (
-    <>
+    <Container>
+      <Header />
       <Title isDarkMode={isDarkMode}>Edit</Title>
       <Form recipe={recipe} onSubmit={onSubmit} isDarkMode={isDarkMode} />
-    </>
+      <Navigation isDarkMode={isDarkMode} />
+    </Container>
   );
 }
