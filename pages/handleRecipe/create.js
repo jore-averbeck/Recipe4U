@@ -38,8 +38,8 @@ export default function CreateRecipe({ isDarkMode }) {
     <Container>
       <Header />
       <Title isDarkMode={isDarkMode}>Create a Recipe</Title>
-      <Form onSubmit={onSubmit} />
-      <Navigation />
+      <Form onSubmit={onSubmit} isDarkMode={isDarkMode} />
+      <Navigation isDarkMode={isDarkMode} />
     </Container>
   );
 }

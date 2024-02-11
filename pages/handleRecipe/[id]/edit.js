@@ -1,6 +1,11 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Form from "../../../components/Form.js";
+import styled from "styled-components";
+
+const Title = styled.h2`
+  color: ${(props) => (props.isDarkMode ? "#fafafa" : "var(--primary)")};
+`;
 
 export default function EditRecipe() {
   const router = useRouter();
@@ -26,8 +31,8 @@ export default function EditRecipe() {
   }
   return (
     <>
-      <h2>Edit</h2>
-      <Form recipe={recipe} onSubmit={onSubmit} />
+      <Title isDarkMode={isDarkMode}>Edit</Title>
+      <Form recipe={recipe} onSubmit={onSubmit} isDarkMode={isDarkMode} />
     </>
   );
 }

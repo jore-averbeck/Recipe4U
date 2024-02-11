@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Instructions from "./Instruction";
+import Router from "router";
+import { useRouter } from "next/router";
 
 const StyledForm = styled.form`
   display: flex;
@@ -12,8 +14,9 @@ const StyledForm = styled.form`
   width: 90%;
   margin: 0 0 5rem 0.25rem;
   padding: 2rem;
-  background-color: #fafafa;
-  color: #222c61;
+  background-color: ${(props) =>
+    props.isDarkMode ? "var(--darkmode-primary)" : "var(--fourth)"};
+  color: ${(props) => (props.isDarkMode ? "black" : "var(--primary)")};
   font-weight: bold;
   box-shadow: var(--primary-shadow);
   overflow-y: auto;
@@ -23,7 +26,26 @@ const StyledInput = styled.input`
   border: 0.1rem solid #222c61;
   border-radius: 0.2rem;
   padding: 0.2rem;
+  background-color: ${(props) =>
+    props.isDarkMode ? "var(--primary)" : "var(--fourth)"};
+  color: ${(props) =>
+    props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
 `;
+const StyledSelect = styled.select`
+  background-color: ${(props) =>
+    props.isDarkMode ? "var(--primary)" : "var(--fourth)"};
+  color: ${(props) =>
+    props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
+`;
+
+const StyledFormButton = styled.button`
+  width: 100px;
+  background-color: ${(props) =>
+    props.isDarkMode ? "var(--primary)" : "var(--fourth)"};
+  color: ${(props) =>
+    props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
+`;
+
 const defaultRecipe = {
   title: "",
   description: "",
@@ -34,11 +56,22 @@ const defaultRecipe = {
   instructions: [{ id: uuidv4(), step: "" }],
 };
 
-export default function ServiceForm({ recipe = defaultRecipe, onSubmit }) {
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
+export default function ServiceForm({
+  recipe = defaultRecipe,
+  onSubmit,
+  isDarkMode,
+}) {
   const [instructions, setInstructions] = useState(
     recipe.instructions ? recipe.instructions : [{ id: uuidv4(), value: "" }]
   );
   const [duration, setDuration] = useState("");
+  const router = useRouter();
 
   function handleInstructionChange(id, value) {
     const newInstructions = instructions.map((instruction) =>
@@ -78,29 +111,49 @@ export default function ServiceForm({ recipe = defaultRecipe, onSubmit }) {
     setDuration(event.target.value);
   }
 
+  function handleCancel(event) {
+    event.preventDefault();
+    const isConfirmed = window.confirm("Are you sure?");
+    if (isConfirmed) {
+      router.push("/");
+    }
+  }
+
   return (
     <>
-      <StyledForm onSubmit={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit} isDarkMode={isDarkMode}>
         <label htmlFor="title">Title</label>
-        <StyledInput id="title" name="title" defaultValue={recipe.title} />
+        <StyledInput
+          id="title"
+          name="title"
+          defaultValue={recipe.title}
+          isDarkMode={isDarkMode}
+        />
         <label htmlFor="description">description</label>
         <StyledInput
           id="description"
           name="description"
           defaultValue={recipe.description}
+          isDarkMode={isDarkMode}
         />
         <label htmlFor="image">Image</label>
-        <StyledInput id="image" name="image" defaultValue={recipe.image} />
+        <StyledInput
+          id="image"
+          name="image"
+          defaultValue={recipe.image}
+          isDarkMode={isDarkMode}
+        />
         <label htmlFor="difficulty">Difficulty</label>
-        <select
+        <StyledSelect
           id="difficulty"
           name="difficulty"
           defaultValue={recipe.difficulty}
+          isDarkMode={isDarkMode}
         >
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="difficult">Difficult</option>
-        </select>
+        </StyledSelect>
         <label htmlFor="duration">Duration: {duration} minutes</label>
         <input
           type="range"
@@ -117,15 +170,27 @@ export default function ServiceForm({ recipe = defaultRecipe, onSubmit }) {
           name="ingredients"
           defaultValue={recipe.ingredients}
           placeholder="oats, sugar, salt..."
+          isDarkMode={isDarkMode}
         />
         <Instructions
           instructions={instructions}
           onInstructionChange={handleInstructionChange}
           onAddInstruction={handleAddInstruction}
           onRemoveInstruction={handleRemoveInstruction}
+          isDarkMode={isDarkMode}
         />
-
-        <button>Save</button>
+        <ButtonContainer>
+          <StyledFormButton isDarkMode={isDarkMode} type="submit">
+            Save
+          </StyledFormButton>
+          <StyledFormButton
+            type="cancel"
+            onClick={handleCancel}
+            isDarkMode={isDarkMode}
+          >
+            X
+          </StyledFormButton>
+        </ButtonContainer>
       </StyledForm>
     </>
   );
