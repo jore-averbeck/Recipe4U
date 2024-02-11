@@ -156,13 +156,14 @@ export default function Homepage({
                   id={recipe._id}
                   onToggleFavorites={handleToggleFavorites}
                   favorites={favorites}
+                  isDarkMode={isDarkMode}
                 />
               </StyledList>
             )
           )}
         </CardContainer>
       </section>
-      <Navigation />
+      <Navigation isDarkMode={isDarkMode} />
     </Container>
   );
 }

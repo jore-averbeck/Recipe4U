@@ -10,7 +10,8 @@ const StyledNavigation = styled.nav`
   width: 100%;
   height: 60px;
   box-shadow: var(--secondary-shadow);
-  background-color: var(--secondary);
+  background-color: ${(props) =>
+    props.isDarkMode ? "var(--darkmode-primary)" : "var(--secondary)"};
 `;
 
 const StyledUnorderedList = styled.ul`
@@ -31,27 +32,27 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: var(--primary);
+  color: ${(props) => (props.isDarkMode ? "black" : "var(--primary)")};
   font-size: 2rem;
 `;
 
-export default function Navigation() {
+export default function Navigation({ isDarkMode }) {
   return (
-    <StyledNavigation>
+    <StyledNavigation isDarkMode={isDarkMode}>
       <StyledUnorderedList>
         <StyledListItem>
           <StyledLink href="/">
-            <StyledIcon icon={faHouse} />
+            <StyledIcon icon={faHouse} isDarkMode={isDarkMode} />
           </StyledLink>
         </StyledListItem>
         <StyledListItem>
           <StyledLink href="/handleRecipe/create">
-            <StyledIcon icon={faPlus} />
+            <StyledIcon icon={faPlus} isDarkMode={isDarkMode} />
           </StyledLink>
         </StyledListItem>
         <StyledListItem>
           <StyledLink href="/favorites">
-            <StyledIcon icon={faHeart} />
+            <StyledIcon icon={faHeart} isDarkMode={isDarkMode} />
           </StyledLink>
         </StyledListItem>
       </StyledUnorderedList>

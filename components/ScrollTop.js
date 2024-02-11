@@ -21,7 +21,6 @@ export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Funktion, um zu überprüfen, ob der Benutzer weit genug nach unten gescrollt hat
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
         setIsVisible(true);

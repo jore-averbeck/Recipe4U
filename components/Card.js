@@ -20,7 +20,8 @@ const Article = styled.article`
   position: relative;
   height: 100%;
   padding-bottom: 1rem;
-  background-color: var(--fourth);
+  background-color: ${(props) =>
+    props.isDarkMode ? "var(--darkmode-primary)" : "var(--fourth)"};
   box-shadow: var(--primary-shadow);
   border-radius: 0.5rem;
 `;
@@ -35,7 +36,7 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledEdit = styled(FontAwesomeIcon)`
-  color: var(--primary);
+  color: ${(props) => (props.isDarkMode ? "black" : "var(--primary)")};
   font-size: 1.2rem;
   position: absolute;
   bottom: 1rem;
@@ -43,7 +44,7 @@ const StyledEdit = styled(FontAwesomeIcon)`
 `;
 
 const StyledTrash = styled(FontAwesomeIcon)`
-  color: var(--primary);
+  color: ${(props) => (props.isDarkMode ? "black" : "var(--primary)")};
   font-size: 1.2rem;
   position: absolute;
   bottom: 1rem;
@@ -69,13 +70,12 @@ const Title = styled.h3`
   padding-left: 0.5rem;
   max-width: 80%;
   margin-top: 0.1rem;
-  color: ${(props) =>
-    props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
+  color: ${(props) => (props.isDarkMode ? "black" : "var(--primary)")};
 `;
 
 const DefaultHeart = styled(FontAwesomeIcon)`
   font-size: 2rem;
-  color: var(--primary);
+  ${(props) => (props.isDarkMode ? "inherit" : "var(--primary)")};
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
@@ -95,6 +95,7 @@ export default function Card({
   id,
   onToggleFavorites,
   favorites,
+  isDarkMode,
 }) {
   const { data, mutate } = useSWR("/api/recipes", { fallbackData: [] });
   const isFavorite = favorites && favorites.includes(id);
@@ -117,17 +118,17 @@ export default function Card({
   }
   return (
     <>
-      <Article>
+      <Article isDarkMode={isDarkMode}>
         <StyledLink href={`/recipes/${id}`}>
           <StyledImage src={image} width={100} height={100} />
-          <Title>{title}</Title>
+          <Title isDarkMode={isDarkMode}>{title}</Title>
         </StyledLink>
         <Container>
           <Link href={`/handleRecipe/${id}/edit`}>
-            <StyledEdit icon={faPen} />
+            <StyledEdit icon={faPen} isDarkMode={isDarkMode} />
           </Link>
           <StyledButton onClick={() => handleDelete(id)}>
-            <StyledTrash icon={faTrash} />
+            <StyledTrash icon={faTrash} isDarkMode={isDarkMode} />
           </StyledButton>
           <StyledButton
             onClick={(event) => event && onToggleFavorites(id, event)}
@@ -135,7 +136,7 @@ export default function Card({
             {isFavorite ? (
               <RedHeart icon={Heart} />
             ) : (
-              <DefaultHeart icon={Heart} />
+              <DefaultHeart icon={Heart} isDarkMode={isDarkMode} />
             )}
           </StyledButton>
         </Container>

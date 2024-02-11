@@ -2,11 +2,12 @@ import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Card from "@/components/Card";
 import styled from "styled-components";
-import DarkmodeButton from "@/components/DarkmodeButton";
 
 const Container = styled.div`
   margin-bottom: 5rem;
+  position: relative;
 `;
+
 const CardContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -26,10 +27,12 @@ const StyledList = styled.li`
   width: 300px;
   height: 362px;
 `;
+
 export default function Favorites({
   recipes,
   handleToggleFavorites,
   favorites,
+  isDarkMode,
 }) {
   const recipesToDisplay = recipes.filter((recipe) =>
     favorites.includes(recipe._id)
@@ -39,8 +42,8 @@ export default function Favorites({
   return (
     <Container>
       <Header />
-      {recipesToDisplay.map((recipe) => (
-        <CardContainer>
+      <CardContainer>
+        {recipesToDisplay.map((recipe) => (
           <StyledList key={recipe._id}>
             <Card
               title={recipe.title}
@@ -51,11 +54,12 @@ export default function Favorites({
               id={recipe._id}
               onToggleFavorites={handleToggleFavorites}
               favorites={favorites}
+              isDarkMode={isDarkMode}
             />
           </StyledList>
-        </CardContainer>
-      ))}
-      <Navigation />
+        ))}
+      </CardContainer>
+      <Navigation isDarkMode={isDarkMode} />
     </Container>
   );
 }

@@ -12,6 +12,7 @@ export default createGlobalStyle`
     --secondary: #fafafa;
     --third: orange;
     --fourth:white;
+    --darkmode-primary:#495dc9;
   
     --primary-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
     --secondary-shadow:0px -3px 5px rgba(0, 0, 0, 0.2);

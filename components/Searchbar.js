@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 
 const SearchbarContainer = styled.div`
-  /* background-color: var(--secondary); */
   background-color: ${(props) =>
-    props.isDarkMode ? "#3648a3" : "var(--secondary)"};
+    props.isDarkMode ? "var(--darkmode-primary)" : "var(--secondary)"};
   box-shadow: var(--third-shadow);
   margin-left: 2rem;
   width: 60%;
@@ -24,7 +23,7 @@ const SearchInput = styled.input`
   width: 82%;
   border: none;
   background-color: ${(props) =>
-    props.isDarkMode ? "#3648a3" : "var(--secondary)"};
+    props.isDarkMode ? "var(--darkmode-primary)" : "var(--secondary)"};
 
   &:active {
     border-color: blue;
