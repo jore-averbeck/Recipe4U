@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Instructions from "./Instruction";
-import Router from "router";
 import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 
 const StyledForm = styled.form`
   display: flex;
@@ -40,10 +41,13 @@ const StyledSelect = styled.select`
 
 const StyledFormButton = styled.button`
   width: 100px;
-  background-color: ${(props) =>
-    props.isDarkMode ? "var(--primary)" : "var(--fourth)"};
-  color: ${(props) =>
-    props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
+  background-color: var(--primary);
+  color: var(--secondary);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem;
+  border: none;
+  border-radius: 0.3rem;
 `;
 
 const defaultRecipe = {
@@ -181,14 +185,15 @@ export default function ServiceForm({
         />
         <ButtonContainer>
           <StyledFormButton isDarkMode={isDarkMode} type="submit">
-            Save
+            Save <FontAwesomeIcon icon={faCheck} />
           </StyledFormButton>
           <StyledFormButton
             type="cancel"
             onClick={handleCancel}
             isDarkMode={isDarkMode}
           >
-            X
+            Cancel
+            <FontAwesomeIcon icon={faBan} />
           </StyledFormButton>
         </ButtonContainer>
       </StyledForm>
