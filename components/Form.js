@@ -46,8 +46,9 @@ const StyledFormButton = styled.button`
   display: flex;
   justify-content: space-between;
   padding: 0.4rem;
-  border: none;
   border-radius: 0.3rem;
+  border: none;
+  
 `;
 
 const defaultRecipe = {
