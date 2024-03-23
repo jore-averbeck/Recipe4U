@@ -94,6 +94,7 @@ export default function ServiceForm({
     );
     setInstructions(newInstructions);
   }
+  
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -177,6 +178,7 @@ export default function ServiceForm({
           placeholder="oats, sugar, salt..."
           isDarkMode={isDarkMode}
         />
+        <label>Instructions</label>
         <Instructions
           instructions={instructions}
           onInstructionChange={handleInstructionChange}

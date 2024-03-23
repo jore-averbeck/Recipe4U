@@ -1,90 +1,65 @@
-import React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
-const StyledInstructions = styled.div`
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
+const InstructionContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 `;
 
-const StyledTextarea = styled.textarea`
+const StyledInput = styled.input`
+  flex: 1;
+  border: 0.1rem solid #222c61;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
   background-color: ${(props) =>
     props.isDarkMode ? "var(--primary)" : "var(--fourth)"};
   color: ${(props) =>
     props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
-
-  width: 250px;
-`;
-
-const Container = styled.ul`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const StyledButton = styled.button`
-  background: transparent;
+  background-color: var(--primary);
+  color: white;
   border: none;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const StyledIcon = styled(FontAwesomeIcon)`
-  font-size: 1.2rem;
-`;
-
-function Instruction({ index, instruction, onChange, isDarkMode }) {
-  return (
-    <li>
-      <span>{index + 1}. </span>
-      <StyledTextarea
-        type="text"
-        placeholder="instructions"
-        value={instruction.step || ""}
-        onChange={(e) => onChange(instruction.id, e.target.value)}
-        required
-        minLength={1}
-        maxLength={150}
-        wrap="hard"
-        rows={5}
-        isDarkMode={isDarkMode}
-      />
-    </li>
-  );
-}
-
-export default function Instructions({
+const Instructions = ({
   instructions,
   onInstructionChange,
   onAddInstruction,
   onRemoveInstruction,
   isDarkMode,
-  onRemove,
-}) {
+}) => {
   return (
-    <StyledInstructions>
-      <label htmlFor="instructions">steps</label>
-
+    <>
       {instructions.map((instruction, index) => (
-        <Container>
-          <Instruction
-            key={instruction.id}
-            index={index}
-            instruction={instruction}
-            onChange={onInstructionChange}
-            onRemove={() => onRemoveInstruction(instruction.id)}
+        <InstructionContainer key={instruction.id}>
+          <StyledInput
+            type="text"
+            placeholder={`Step ${index + 1}`}
+            value={instruction.step}
+            onChange={(e) => onInstructionChange(instruction.id, e.target.value)}
             isDarkMode={isDarkMode}
           />
-          <div>
+          {index === instructions.length - 1 && (
             <StyledButton type="button" onClick={onAddInstruction}>
-              <StyledIcon icon={faPlus} />
+            +
+          </StyledButton>
+          )}
+          <StyledButton onClick={() => onRemoveInstruction(instruction.id)}>
+              -
             </StyledButton>
-            <StyledButton type="button" onClick={onRemove}>
-              <StyledIcon icon={faMinus} />
-            </StyledButton>
-          </div>
-        </Container>
+        </InstructionContainer>
       ))}
-    </StyledInstructions>
+    </>
   );
-}
+};
+
+export default Instructions;
+
