@@ -104,8 +104,6 @@ export default function Homepage({
   }
 
   function handleClickEvent(value) {
-    setSearchClicked(true);
-    setSearchValue(value);
     const results = fuse.search(value);
     const filteredResults = results.filter((result) => {
       return result.item.title.toLowerCase() === value.toLowerCase();
