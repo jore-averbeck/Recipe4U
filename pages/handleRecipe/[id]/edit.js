@@ -26,19 +26,37 @@ export default function EditRecipe({ isDarkMode }) {
     mutate,
   } = useSWR(id ? `/api/recipes/${id}` : null);
 
-  async function onSubmit(data) {
-    const response = await fetch(`/api/recipes/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    });
-    mutate(`/api/recipes`);
-    mutate(`/api/recipes/${id}`);
-    router.push("/");
-  }
-  if (!recipe || isLoading) {
+  if (isLoading) {
     return "Loading";
   }
+
+  if (!recipe) {
+    return "Not found";
+  }
+  
+
+  async function onSubmit(data) {
+    try {
+      const response = await fetch(`/api/recipes/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to update recipe: ${response.status} ${response.statusText}`);
+      }
+  
+      mutate(`/api/recipes`);
+      mutate(`/api/recipes/${id}`);
+  
+      router.push("/");
+    } catch (error) {
+      console.error("Error updating recipe:", error.message);
+    }
+  }
+  
+
   return (
     <Container>
       <Header />

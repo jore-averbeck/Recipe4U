@@ -38,7 +38,7 @@ export default function Favorites({
     favorites.includes(recipe._id)
   );
 
-  console.log(recipes);
+  
   return (
     <Container>
       <Header />

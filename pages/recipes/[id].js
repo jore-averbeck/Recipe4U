@@ -51,6 +51,10 @@ const Steps = styled.ol`
   margin-bottom: -0.1rem;
   padding: 2rem 0 1rem;
 `;
+const List=styled.li`
+margin-top:0.5rem;
+margin-left:1.5rem;
+`;
 
 const Duration = styled.p`
   color: var(--primary);
@@ -93,7 +97,7 @@ export default function DetailsPage() {
 
         <Steps>
           {instructions.map((instruction) => (
-            <li key={instruction.id}>{instruction.step}</li>
+            <List key={instruction.id}>{instruction.step}</List>
           ))}
         </Steps>
       </Article>

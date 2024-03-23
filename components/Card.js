@@ -97,7 +97,7 @@ export default function Card({
   favorites,
   isDarkMode,
 }) {
-  const { data, mutate } = useSWR("/api/recipes", { fallbackData: [] });
+  const { mutate } = useSWR("/api/recipes", { fallbackData: [] });
   const isFavorite = favorites && favorites.includes(id);
 
   async function handleDelete(id) {
