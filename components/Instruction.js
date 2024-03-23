@@ -6,7 +6,7 @@ const InstructionContainer = styled.div`
   align-items: center;
 `;
 
-const StyledInput = styled.input`
+const StyledTextarea = styled.textarea`
   flex: 1;
   border: 0.1rem solid #222c61;
   border-radius: 0.2rem;
@@ -15,6 +15,7 @@ const StyledInput = styled.input`
     props.isDarkMode ? "var(--primary)" : "var(--fourth)"};
   color: ${(props) =>
     props.isDarkMode ? "var(--secondary)" : "var(--primary)"};
+    min-height: 4rem;	
 `;
 
 const StyledButton = styled.button`
@@ -40,21 +41,22 @@ const Instructions = ({
     <>
       {instructions.map((instruction, index) => (
         <InstructionContainer key={instruction.id}>
-          <StyledInput
-            type="text"
+          <StyledTextarea
             placeholder={`Step ${index + 1}`}
             value={instruction.step}
-            onChange={(e) => onInstructionChange(instruction.id, e.target.value)}
+            onChange={(e) =>
+              onInstructionChange(instruction.id, e.target.value)
+            }
             isDarkMode={isDarkMode}
           />
           {index === instructions.length - 1 && (
             <StyledButton type="button" onClick={onAddInstruction}>
-            +
-          </StyledButton>
+              +
+            </StyledButton>
           )}
           <StyledButton onClick={() => onRemoveInstruction(instruction.id)}>
-              -
-            </StyledButton>
+            -
+          </StyledButton>
         </InstructionContainer>
       ))}
     </>
@@ -62,4 +64,3 @@ const Instructions = ({
 };
 
 export default Instructions;
-
