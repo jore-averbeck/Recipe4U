@@ -8,6 +8,7 @@ import Loader from "@/components/Loader.js";
 import Fuse from "fuse.js";
 import Searchbar from "@/components/Searchbar.js";
 import DarkmodeButton from "@/components/DarkmodeButton.js";
+import ScrollToTop from "@/components/ScrollTop.js";
 
 const CardContainer = styled.ul`
   display: grid;
@@ -121,6 +122,7 @@ export default function Homepage({
     <Container>
       <Header />
       <DarkmodeButton toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+      <ScrollToTop />
       <Searchbar
         suggestions={searchClicked ? suggestions : []}
         onInputChange={handleInputChange}
